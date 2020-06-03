@@ -1,0 +1,53 @@
+import java.util.*;
+import java.io.*;                                                 
+
+	/*                                                   
+    Ten cats                                                 
+	*/                                                  
+
+	public class Solution {                                                  
+		public static void main(String[] args) {                                                  
+			Map<String, Cat> map = createMap();                                                  
+			Set<Cat> set = convertMapToSet(map);                                                  
+			printCatSet(set);                                                  
+		}                                                  
+
+		public static Map<String, Cat> createMap() {                                                  
+			Map<String, Cat> map = new HashMap<>();
+			map.put("Vaska",new Cat("Vaska"));
+			map.put("Vask",new Cat("Vask"));
+			map.put("Vas",new Cat("Vas"));
+			map.put("Va",new Cat("Va"));
+			map.put("V",new Cat("V"));
+			map.put("aska",new Cat("aska"));
+			map.put("ska",new Cat("ska"));
+			map.put("ka",new Cat("ka"));
+			map.put("a",new Cat("a"));
+			map.put("Vs",new Cat("Vs"));
+			return map;
+		}                                                  
+
+		public static Set<Cat> convertMapToSet(Map<String, Cat> map) {                                                  
+			Set<Cat> setCat = new HashSet<>( map.values()); 
+			return setCat;
+		}                                                  
+
+		public static void printCatSet(Set<Cat> set) {                                                  
+			for (Cat cat : set) {                                                  
+				System.out.println(cat);                                                  
+			}                                                  
+		}                                                  
+
+		public static class Cat {                                                  
+			private String name;                                                  
+
+			public Cat(String name) {                                                  
+				this.name = name;                                                  
+			}                                                  
+
+			public String toString() {                                                  
+				return "Cat " + this.name;                                                  
+			}                                                  
+		}                                                                    
+	
+}
