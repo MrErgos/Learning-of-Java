@@ -1,0 +1,41 @@
+import java.util.HashMap;                                                                                                                                                                                                        
+import java.util.Map;
+import java.util.*;
+import java.io.*;                                                                                                                                                                                                        
+
+/*                                                                                                                                                                                                         
+ English letters                                                                                                                                                                                                       
+ */                                                                                                                                                                                                        
+
+public class Solution {                                                                                                                                                                                                        
+    
+    public static void main(String[] args) { 
+		ArrayList<Character> letters = new ArrayList<>(Arrays.asList('q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m',
+		'Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','Z','X','C','V','B','N','M'));
+		int count = 0;
+		FileInputStream input = null;
+		try {
+				String s = args[0];
+				input = new FileInputStream(s);
+				while (input.available() > 0){
+					Character letter = (char) input.read();
+					if (letters.contains(letter)){
+						count++;
+					}
+				}
+		}
+		catch (IOException e) {
+			System.out.println("Kiss my shiny metal ass!LEATHER BONE LEATHER BAG");
+		}
+		try {
+			input.close();
+		}
+		catch (IOException e) {
+			System.out.println("Error closing");
+		}
+		
+		System.out.println(count);
+		
+		
+    }                                                                                                                                                                                                        
+}         
