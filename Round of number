@@ -1,0 +1,103 @@
+import java.util.*;
+import java.io.*;                                                                                                                                                                                                        
+
+/*                                                                                                                                                                                                         
+ Round of number                                                                                                                                                                 
+ */                                                                                                                                                                                                        
+
+public class Solution {                                                                                                                                                                                                        
+    
+    public static void main(String[] args) { 
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		FileInputStream input1 = null;
+		FileOutputStream output = null;
+		byte[] buffer = null;
+		try {
+				String s = reader.readLine();
+				input1 = new FileInputStream(args[0]);
+				s = reader.readLine();
+				output = new FileOutputStream(args[1]);
+				buffer = new byte[input1.available()];
+				while (input1.available() > 0){
+					int c = input1.read(buffer);
+				}
+				reader.close();
+				}
+			catch (IOException e) {
+				System.out.println("Kiss my shiny metal ass!LEATHER BONE LEATHER BAG");
+			}
+				ArrayList<ArrayList<String>> list = new ArrayList<>();
+				char num = 0;
+				int h = 0;
+				for (int i = 0;h<buffer.length;){
+					num = (char) buffer[h];
+					if (list.size() != (i+1)){
+						list.add(new ArrayList<String>());
+					}
+					else{
+					if (buffer[h] == 32){
+						i++;
+						h++;
+					}
+					else{
+						
+						list.get(i).add(String.valueOf(num));
+						h++;
+						
+					}
+					}
+				}
+				List<String> listString = new ArrayList<>();
+				for (int i = 0;i<list.size();i++){
+					String data = list.get(i).get(0);
+					for (int j = 1;j<list.get(i).size();j++){
+						data += list.get(i).get(j);
+					}
+					listString.add(i, data);
+				}
+		for (int j = 0;j<listString.size();j++){
+			listString.set(j,String.valueOf(Math.round(Double.valueOf(listString.get(j)))));
+		}
+		
+		ArrayList<byte[]> listBuffers = new ArrayList<>();
+		for (int j = 0;j<listString.size();j++){
+			listBuffers.add(listString.get(j).getBytes());
+			
+		}
+		h = 0;
+		for (int i = 0;i<listBuffers.size();i++){
+			for (int j = 0;j<listBuffers.get(i).length;j++){
+				h++;
+			}
+		}
+		byte[] t = "-".getBytes();
+		byte[] b = new byte[h*2];
+		h = 0;
+		for (int i = 0;i<listBuffers.size();i++){
+			for (int j = 0;j<listBuffers.get(i).length;j++){
+				b[h] = listBuffers.get(i)[j];
+				h++;
+				
+			}
+				b[h] = 32;
+				h++;
+		}
+		try{
+			output.write(b);
+		}
+		catch (IOException e){
+			System.out.println(e);
+		}
+		
+		try {
+			input1.close();
+			output.close();
+		}
+		catch (IOException e) {
+			System.out.println("Error closing");
+		}
+		
+		
+		
+    }                                                                                                                                                                                                        
+}         
