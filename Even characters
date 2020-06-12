@@ -1,0 +1,27 @@
+import java.util.*;
+import java.io.*;                                                                                                                                                                                                        
+
+
+/*                                                   
+ Even characters                                                 
+*/                                                  
+public class Solution{
+	public static void main(String[] args) throws IOException{     
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		String s = reader.readLine();
+		FileReader file1 = new FileReader(args[0]);
+		s = reader.readLine();
+		FileWriter file2 = new FileWriter(args[1]);
+		reader.close();
+		ArrayList<Integer> list = new ArrayList<>();
+		while (file1.ready()){
+			list.add( file1.read());
+		}
+		for (int i = 1;i<list.size();){
+			file2.write(list.get(i));
+			System.out.println(list.get(i));
+			i += 2;
+		}
+		
+	}     
+}
