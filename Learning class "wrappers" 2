@@ -1,0 +1,23 @@
+import java.util.*;
+import java.io.*;                                                                                                                                                                                                        
+
+public class Solution {                                                                                                    
+    public static TestString testString = new TestString();                                                                                                    
+
+    public static void main(String[] args) {                                                                                                    
+		PrintStream consoleOriginal = System.out;
+		ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+		PrintStream consoleFake = new PrintStream(byteArray);
+		System.setOut(consoleFake);
+		testString.printSomething();
+	 	System.setOut(consoleOriginal);
+		String text = byteArray.toString();
+		System.out.println(text.replaceAll("te","??"));
+    }                                                                                                    
+
+    public static class TestString {                                                                                                    
+        public void printSomething() {                                                                                                    
+            System.out.println("it's a text for testing");                                                                                                    
+        }                                                                                                    
+    }                                                                                                    
+} 
