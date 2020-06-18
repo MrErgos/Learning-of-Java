@@ -1,0 +1,23 @@
+import java.util.*;
+import java.io.*;
+
+public class Solution {                                                                                                    
+    public static TestString testString = new TestString();                                                  
+
+    public static void main(String[] args) {   
+		PrintStream consoleOriginal = System.out;
+		ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+		PrintStream consoleFake = new PrintStream(byteArray);
+		System.setOut(consoleFake);
+		testString.printSomething();
+	 	System.setOut(consoleOriginal);
+		String text = byteArray.toString();
+		System.out.println(text.replaceAll("[^0-9]",""));
+    }                                                  
+
+    public static class TestString {                                                  
+        public void printSomething() {                                                  
+            System.out.println("it's 1 a 23 text 4 f5-6or7 tes8ting");                                                  
+        }                                                  
+    }                                                                                                    
+} 
