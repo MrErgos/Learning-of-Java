@@ -1,0 +1,64 @@
+import java.util.*;
+import java.io.*;
+
+public class Solution {                                                                                                    
+    public static TestString testString = new TestString();                                                  
+
+    public static void main(String[] args) {   
+		PrintStream consoleOriginal = System.out;
+		ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+		PrintStream consoleFake = new PrintStream(byteArray);
+		System.setOut(consoleFake);
+		testString.printSomething();
+	 	System.setOut(consoleOriginal);
+		String text = byteArray.toString();
+		int a = 0;
+		int b = 0;
+		String p = " ";
+		String num = "";
+		int count = 0;
+		String newText = "";
+		for (Character c : text.toCharArray()){
+			if (c != 10)
+				newText += c;
+			if (c == '='){
+				b = Integer.parseInt(num);
+				break;
+			}
+			if (!p.equals(" ")){
+				if (c != ' ' && c != '+' && c != '-' && c != '*' && c != '='){
+					b = Integer.parseInt(""+c);
+					num += b;
+				    }
+			}
+			if (p.equals(" ")){
+				if (c != ' ' && c != '+' && c != '-' && c != '*' && c != '='){
+				a = Integer.parseInt(""+c);
+				num += a;
+				}
+			}
+			if (c.toString().equals("+") || c.toString().equals("-") || c.toString().equals("*")){
+				a = Integer.parseInt(num);
+				num = "";
+				p = c.toString();
+			}
+		}
+		if (p.equals("+")){
+			count = a + b;
+		}
+		if (p.equals("-")){
+			count = a - b;
+		}
+		if (p.equals("*")){
+			count = a * b;
+		}
+		newText += " " + count;
+		System.out.println(newText);
+    }                                                  
+
+    public static class TestString {                                                  
+        public void printSomething() {                                                  
+            System.out.println("37 + 611 = ");                                                  
+        }                                                  
+    }                                                                                                    
+} 
