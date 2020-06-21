@@ -1,0 +1,55 @@
+public class Solution {                                                                                                                                                                                                        
+    public static Map<String, String> createMap() {                                                                                                                                                                                                                                                                                                                                                             
+        HashMap<String, String> map = new HashMap<>();                                                                                                                                                      
+		map.put("Petrov","Ivan");
+		map.put("Babin","Vasiliy");
+		map.put("Babinos","George");
+		map.put("Perjanovsky","Evgeniy");
+		map.put("Ivanov","Petr");
+		map.put("Terentiv","Ivan");
+		map.put("Pupkin","Vasiliy");
+		map.put("Vashington","George");
+		map.put("Samedinov","Tair");
+		map.put("Noodles","Nikita");
+		return map;
+    }                                                                                                                                                                                                        
+
+    public static void removeTheFirstNameDuplicates(Map<String, String> map) {   
+	    ArrayList<String> val = new ArrayList<>();
+        int i = 0;                                                                                                                                                                                                        
+        for (Map.Entry<String,String> pair : map.entrySet()){  
+            String value = pair.getValue();
+			String key = pair.getKey();
+			for (Map.Entry<String,String> p : map.entrySet()){                                                                                                                                                                                                                                                          
+				String value2 = p.getValue();
+				String key2 = p.getKey();
+				if (value.equals(value2) && !(key.equals(key2))){
+					val.add(value);
+					i++;
+				}
+			}
+        }                     
+		Set<String> set = new HashSet<>(val);
+		val.clear();
+		val.addAll(set);
+        for (String s : val){         
+			System.out.println(s);
+            removeItemFromMapByValue(map, s);                                                                                                                                                                                                                                                          
+        } 
+    }                                                                                                                                                                                                        
+
+    public static void removeItemFromMapByValue(Map<String, String> map, String value) {                                                                                                                                                                                                        
+        Map<String, String> copy = new HashMap<>(map);                                                                                                                                                                                                        
+        for (Map.Entry<String, String> pair : copy.entrySet()) {                                                                                                                                                                                                        
+            if (pair.getValue().equals(value)) {                                                                                                                                                                                                        
+                map.remove(pair.getKey());                                                                                                                                                                                                        
+            }                                                                                                                                                                                                        
+        }                                                                                                                                                                                                        
+    }                                                                                                                                                                                                        
+
+    public static void main(String[] args) {                                                                                                                                                                                                        
+		Map<String,String> map = createMap();
+		removeTheFirstNameDuplicates(map);
+		System.out.println(map);
+    }                                                                                                                                                                                                        
+}                
