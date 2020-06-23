@@ -1,0 +1,23 @@
+import java.util.*;
+import java.io.*;
+
+public class Solution {                                                                                                                                                   
+
+    public static void main(String[] args) throws IOException, FileNotFoundException{   
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		FileReader file1 = new FileReader(args[0]);
+		reader = new BufferedReader(file1);
+		ArrayList<String> text = new ArrayList<>();
+		int count = 0;
+		for (int i = 0;reader.ready();i++){
+			String[] array = reader.readLine().split("\\W");
+			for (String s : array){
+				if (s.equals("world"))
+					count++;
+				text.add(s);
+			}
+		}
+		System.out.println(count);
+		
+    }                                                                                                                                                
+} 
