@@ -1,0 +1,28 @@
+import java.util.*;
+import java.io.*;
+
+public class Solution {                                                                                                    
+    public static TestString testString = new TestString();                                                  
+
+    public static void main(String[] args) throws IOException, FileNotFoundException{   
+		PrintStream consoleOriginal = System.out;
+		ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		FileOutputStream output = new FileOutputStream(reader.readLine());
+		PrintStream consoleFake = new PrintStream(byteArray);
+		System.setOut(consoleFake);
+		testString.printSomething();
+		output.write(byteArray.toByteArray());
+	 	System.setOut(consoleOriginal);
+		String text = byteArray.toString();
+		System.out.println(text);
+		reader.close();
+		output.close();
+    }                                                  
+
+    public static class TestString {                                                  
+        public void printSomething() {                                                  
+			System.out.println("it's a text for testing");                                  
+        }                                                  
+    }                                                                                                    
+} 
