@@ -1,0 +1,107 @@
+import java.util.*;                                                  
+import java.io.*;                                                  
+
+                                                                                                                                           
+public class Solution {                                                  
+    public static void main(String[] args) {                                                  
+        try {                                                  
+            File yourFile = File.createTempFile("Test", null,new File(args[2]));                                                  
+            OutputStream outputStream = new FileOutputStream(yourFile);                                                  
+            InputStream inputStream = new FileInputStream(yourFile);                                                  
+
+            JavaRush javaRush = new JavaRush();                                                  
+            //initialize users field for the javaRush object here
+			Date date = new Date();
+			Random r = new Random();
+			User.Country country = null;
+			for (int i = 0;i<10;i++){
+				int ran = r.nextInt(3);
+				javaRush.users.add(new User());
+				javaRush.users.get(i).setFirstName("Gogi" + i);
+				javaRush.users.get(i).setLastName("Babin" + i);
+				javaRush.users.get(i).setBirthDate(date);
+				if (ran == 0)
+					country = User.Country.OTHER;
+				else if (ran == 1)
+					country = User.Country.RUSSIA;
+				else if (ran == 2)
+					country = User.Country.UKRAINE;
+				javaRush.users.get(i).setCountry(country);
+				javaRush.users.get(i).setMale(r.nextBoolean());
+			}
+			
+            javaRush.save(outputStream);                                                  
+            outputStream.flush();                                                  
+
+            JavaRush loadedObject = new JavaRush();                                                  
+            loadedObject.load(inputStream);                                                  
+            //here check that the javaRush object is equal to the loadedObject object
+			System.out.println(javaRush.equals(loadedObject));
+
+            outputStream.close();                                                  
+            inputStream.close();                                                  
+
+        } catch (IOException e) {                                                  
+            //e.printStackTrace();                                                  
+            System.out.println("Oops, something is wrong with my file");                                                  
+        } catch (Exception e) {                                                  
+            //e.printStackTrace();                                                  
+            System.out.println("Oops, something is wrong with the save/load method");                                                  
+        }                                                  
+    }                                                  
+
+    public static class JavaRush {                                                  
+        public List<User> users = new ArrayList<>();                                                  
+
+        public void save(OutputStream outputStream) throws Exception {                                                  
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+			String isUsersPresent = users != null ? "yes" : "no";
+			writer.write(isUsersPresent + "\n");
+			writer.flush();
+			if (users != null){
+				for (User user : users){
+					String isUserPresent = user != null ? "yes" : "no";
+					writer.write(isUserPresent + "\n");
+					writer.flush();
+					user.save(writer);
+				}
+			}
+        }                                                  
+
+        public void load(InputStream inputStream) throws Exception {                                                  
+              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+			  String isUsersPresent = reader.readLine();
+			  if (isUsersPresent.equals("no"))
+				  System.out.println("I has not find users");
+			  else {
+				  users.clear();
+				  for (int i = 0;reader.ready();i++){
+				  	String isUserPresent = reader.readLine();
+					if (isUserPresent.equals("yes")){
+						users.add(new User());
+						users.get(i).load(reader);
+					}
+					if (isUserPresent.isEmpty())
+						break;
+						
+				  }
+			  }
+        }                                                  
+
+        @Override                                                  
+        public boolean equals(Object o) {                                                  
+            if (this == o) return true;                                                  
+            if (o == null || getClass() != o.getClass()) return false;                                                  
+
+            JavaRush javaRush = (JavaRush) o;                                                  
+
+            return users != null ? users.equals(javaRush.users) : javaRush.users == null;                                                  
+
+        }                                                  
+
+        @Override                                                  
+        public int hashCode() {                                                  
+            return users != null ? users.hashCode() : 0;                                                  
+        }                                                  
+    }                                                  
+}                    
