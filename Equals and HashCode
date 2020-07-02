@@ -1,0 +1,40 @@
+import java.util.HashSet;                                                  
+import java.util.Set;                                                  
+
+/*                                                   
+ Equals and HashCode                                                  
+ */                                                  
+public class Solution {                                                  
+    private final String first, last;                                                  
+
+    public Solution(String first, String last) {                                                  
+        this.first = first;                                                  
+        this.last = last;                                                  
+    }                     
+	@Override
+    public int hashCode() {  
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (first == null ? 0 : first.hashCode());
+		result = prime * result + (last == null ? 0 : last.hashCode());
+        return result;                                                  
+    }                                            
+
+	public boolean equals(Object n) {
+        if (this == n) return true;
+        if (n == null || getClass() != n.getClass()) return false;
+        if (n instanceof Solution) {
+            Solution s = (Solution) n;
+			if (first == s.first && last == s.last) return true;
+            return (first != null ? first.equals(s.first) : first == null) &&
+				(last != null ? last.equals(s.last) : last == null);
+        }
+        return false;
+    }
+	
+    public static void main(String[] args) {                                                  
+        Set<Solution> s = new HashSet<>();                                                  
+        s.add(new Solution("Donald", null)); 
+		System.out.println(s.contains(new Solution("Donald", null)));                                                  
+    }                                                  
+}      
