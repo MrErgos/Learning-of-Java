@@ -1,0 +1,94 @@
+import java.util.LinkedHashMap;                                                                                                    
+import java.util.Map;                                                  
+import java.lang.*;                                                  
+                                                  
+/*                                                                                                     
+Using clone () or Clonable () 3                                                                                                    
+*/                                                                                                    
+public class Solution {                                                                                                    
+    public static class A implements Cloneable {                                                                                                    
+        private int i;                                                                                                    
+        private int j;                                                                                                    
+                                                  
+        public A(int i, int j) {                                                                                                    
+            this.i = i;                                                                                                    
+            this.j = j;                                                                                                    
+        }                                                                                                    
+                                                  
+        public int getI() {                                                                                                    
+            return i;                                                                                                    
+        }                                                                                                    
+                                                  
+        public int getJ() {                                                                                                    
+            return j;                                                                                                    
+        }                                                  
+                                                  
+		@Override                                                  
+		protected Object clone() throws CloneNotSupportedException                                                  
+		{                                                  
+			return super.clone();                                                  
+		}                                                     
+		                                                  
+    }                                                                                                    
+                                                  
+    public static class B extends A {                                                                                                    
+        private String name;                                                                                                    
+                                                  
+        public B(int i, int j, String name) {                                                                                                    
+            super(i, j);                                                                                                    
+            this.name = name;                                                                                                    
+        }                                                                                                    
+                                                  
+        public String getName() {                                                                                                    
+            return name;                                                                                                    
+        }                                                  
+                                                  
+		@Override                                                  
+		protected Object clone() throws CloneNotSupportedException                                                  
+		{                                                  
+			throw new CloneNotSupportedException();                                                  
+		}                                                   
+		                                                  
+    }                                                                                                    
+                                                  
+    public static class C extends B {                                                                                                    
+        public C(int i, int j, String name) {                                                                                                    
+            super(i, j, name);                                                                                                    
+        }                                                  
+                                                  
+		@Override                                                  
+		protected Object clone() throws CloneNotSupportedException                                                  
+		{                                                  
+			int ni = Integer.valueOf(getI());                                                  
+			int nj = Integer.valueOf(getJ());                                                  
+			String newName = String.valueOf(getName());                                                  
+			C nC = new C(ni,nj,newName);                                                  
+			return nC;                                                  
+		}                                                   
+		                                                  
+    }                                                                                                    
+                                                  
+    public static void main(String[] args) {                                                                                                    
+		A a = new A(1,2);                                                  
+		B b = new B(3,4,"Name");                                                  
+		C c = new C(5,6,"Name2");                                                  
+		try{                                                  
+		System.out.println(a.clone());                                                  
+		}                                                  
+		catch (CloneNotSupportedException e){                                                  
+			System.out.println("a");                                                  
+		}                                                  
+		try{                                                  
+			System.out.println(b.clone());                                                  
+		}                                                  
+		catch (CloneNotSupportedException e){                                                  
+			System.out.println("b");                                                  
+		}                                                  
+		try{                                                  
+			System.out.println(c.clone());                                                  
+		}                                                  
+		catch (CloneNotSupportedException e){                                                  
+			System.out.println("c");                                                  
+		}                                                  
+    }                                                                                                    
+}                         
