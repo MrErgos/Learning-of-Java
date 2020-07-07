@@ -1,0 +1,23 @@
+import java.util.*;
+/*                                                                                                     
+ StringTokenizer                                                                                                    
+ */                                                                                                    
+public class Solution {                                                                                                    
+    public static void main(String[] args) {                                                                                                    
+		String[] str = getTokens("level22.lesson13.task01", ".");
+		for (String s : str)
+			System.out.println(s);
+    }                                                                                                    
+
+    public static String[] getTokens(String query, String delimiter) {   
+		StringTokenizer token = new StringTokenizer(query,delimiter);
+		List<String> listHelper = new ArrayList<>();
+		while (token.hasMoreTokens()){
+			String oneToken = token.nextToken();
+			listHelper.add(oneToken);
+		}
+		String[] result = new String[listHelper.size()];
+		listHelper.toArray(result);
+        return result;                                                                                                    
+    }                                                                                                    
+}               
