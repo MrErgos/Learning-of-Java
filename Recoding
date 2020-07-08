@@ -1,0 +1,18 @@
+import java.io.IOException;
+import java.io.*;                                                  
+
+
+public class Solution {                                                  
+    public static void main(String[] args) throws IOException { 
+		FileInputStream fis = new FileInputStream(args[0]);
+		FileOutputStream fos = new FileOutputStream(args[1]);
+		byte[] buffer = new byte[fis.available()];
+		fis.read(buffer);
+		String str = new String(buffer, "Windows-1251");
+		System.out.println(str);
+		buffer = str.getBytes("UTF-8");
+		fos.write(buffer);
+        fis.close();
+        fos.close();
+    }                                                  
+}    
