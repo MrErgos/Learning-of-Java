@@ -1,0 +1,40 @@
+import java.io.IOException;                                                  
+import java.io.*;                                                                                                    
+                                                  
+//////////////////////////                                                  
+//Greatest common factor//                                                      
+//////////////////////////                                                  
+                                                  
+public class Solution {                                                                                                    
+    public static void main(String[] args) throws IOException, Exception {                                                           
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));                                                  
+                                                          
+        int a = Integer.parseInt(reader.readLine());                                                  
+        int b = Integer.parseInt(reader.readLine());                                                  
+        if (a <= 0 || b <= 0)                                                  
+            throw new Exception();                                                  
+        else{                                                  
+        int min;                                                  
+        int max;                                                  
+        if (a > b){                                                  
+            min = b;                                                  
+            max = a;                                                  
+        }                                                  
+        else{                                                  
+            min = a;                                                  
+            max = b;                                                  
+        }                                                  
+        int gcf = 1;                                                  
+        for (int i = min;i > 0;i--){                                                  
+            if (max % i == 0){                                                  
+                if (min % i == 0){                                                  
+                    gcf = i;                                                  
+                    break;                                                  
+                }                                                  
+            }                                                  
+        }                                                  
+        System.out.println(gcf);                                                  
+        }                                                  
+                                                          
+    }                                                                                                    
+}                         
