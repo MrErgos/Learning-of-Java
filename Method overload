@@ -1,0 +1,71 @@
+import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;                                                  
+
+//////////////////////////
+//   Method overloadт   //    
+//////////////////////////
+
+public class Solution {                                                  
+    public static void main(String[] args) throws IOException {                                                  
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        ArrayList<String> list = new ArrayList<>();
+        String str = "";
+        while (!(str = reader.readLine()).equals("exit")){
+            list.add(str);
+        }
+        for (String s : list){
+            boolean flag = false;
+            if (s.equals("exit")) break;
+            try {
+                if (s.contains(".")){ print(Double.parseDouble(s));
+                    flag = true;}
+                
+            }
+            catch (NumberFormatException e){
+                
+            }
+            if (!flag){
+                try{
+                    short i = Short.parseShort(s);
+                    if (i > 0 && i < 128){ print(i);
+                    flag = true;}
+                }
+                catch (NumberFormatException e){
+                    
+                }
+            }
+            if (!flag){
+                try{
+                    Integer j = Integer.parseInt(s);
+                    if (j >= 128 || j <= 0){ print(j);
+                    flag = true;
+                    }
+                    
+                }
+                catch (NumberFormatException e){
+                    
+                }
+            }
+            if (!flag){
+                print(s);
+            }
+        }
+    }                                                  
+
+    public static void print(Double value) {                                                  
+        System.out.println("Это тип Double, значение " + value);                                                  
+    }                                                  
+
+    public static void print(String value) {                                                  
+        System.out.println("Это тип String, значение " + value);                                                  
+    }                                                  
+
+    public static void print(short value) {                                                  
+        System.out.println("Это тип short, значение " + value);                                                  
+    }                                                  
+
+    public static void print(Integer value) {                                                  
+        System.out.println("Это тип Integer, значение " + value);                                                  
+    }                                                  
+}                   
