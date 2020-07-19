@@ -1,0 +1,109 @@
+import java.util.ArrayList;                                                                                                    
+import java.util.List;                                                  
+import java.io.*;                                                 
+
+//////////////////////////
+//   Tracking changes   //    
+//////////////////////////                                                                                                    
+                                                                                             
+
+public class Solution {                                                                                                    
+    public static List<LineItem> lines = new ArrayList<LineItem>();                                                                                                    
+
+    public static void main(String[] args) throws IOException, FileNotFoundException{                                                   
+        BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+        consoleReader.close();
+        BufferedReader reader1 = new BufferedReader(new FileReader(args[0]));
+        BufferedReader reader2 = new BufferedReader(new FileReader(args[1]));
+
+        List<String> list1 = new ArrayList<>();
+        List<String> list2 = new ArrayList<>();
+
+        while(reader1.ready())
+        {
+            list1.add(reader1.readLine());
+        }
+
+        while(reader2.ready())
+        {
+            list2.add(reader2.readLine());
+        }
+
+        reader1.close();
+        reader2.close();
+
+        int f1Index = 0;
+        int f2Index = 0;
+        String f11 = "";
+        String f21 = "";
+        String t1 = "";
+        String t2 = "";
+
+        while (f1Index < list1.size() && f2Index < list2.size())
+        {
+            f11 = list1.get(f1Index);
+            f21 = list2.get(f2Index);
+            if (f11.equals(f21))
+            {
+                lines.add(new LineItem(Type.SAME, f11));
+                f1Index++;
+                f2Index++;
+                if (f1Index == list1.size() && f2Index != list2.size())
+                    lines.add(new LineItem(Type.ADDED, list2.get(f2Index)));
+                if (f1Index != list1.size() && f2Index == list2.size())
+                    lines.add(new LineItem(Type.REMOVED, list1.get(f1Index)));
+            }
+            else
+            {
+                if (f1Index < list1.size()-1 && f2Index < list2.size()-1)
+                {
+                    t1 = list1.get(f1Index+1);
+                    t2 = list2.get(f2Index+1);
+                    if (f11.equals(t2))
+                    {
+                        lines.add(new LineItem(Type.ADDED,f21));
+                        f2Index++;
+                    }
+                    else if (f21.equals(t1))
+                    {
+                        lines.add(new LineItem(Type.REMOVED, f11));
+                        f1Index++;
+                    }
+                }
+                else if (f1Index < list1.size() && f2Index == list2.size())
+                {
+                    lines.add(new LineItem(Type.REMOVED, f11));
+                    lines.add(new LineItem(Type.SAME,f21));
+                    f1Index += 2;
+                    f2Index++;
+                }
+                else if (f1Index == list1.size() && f2Index < list2.size())
+                {
+                    lines.add(new LineItem(Type.ADDED, f21));
+                    lines.add(new LineItem(Type.SAME, f11));
+                    f1Index++;
+                    f2Index+=2;
+                }
+            }
+        }                     
+        for (LineItem item : lines)
+        System.out.println(item.type + " " + item.line);
+    }                                                                                                    
+
+
+    public static enum Type {                                                                                                    
+        ADDED,        //added new string                                                                                                   
+        REMOVED,      //string removed                                                                                                   
+        SAME          //not change                                                                                                   
+        }                                                                                                    
+
+    public static class LineItem {                                                                                                    
+        public Type type;                                                                                                    
+        public String line;                                                                                                    
+
+        public LineItem(Type type, String line) {                                                                                                    
+            this.type = type;                                                                                                    
+            this.line = line;                                                                                                    
+        }                                                                                                    
+    }                                                                                                    
+}                       
