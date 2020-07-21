@@ -1,0 +1,55 @@
+import java.util.ArrayList;                                                                                                    
+import java.util.List; 
+import java.io.*;
+import java.io.FileNotFoundException;                                                  
+import java.io.FileOutputStream;                                                  
+
+/*                                                   
+ AmigoOutputStream                                                  
+ */                                                  
+
+public class AmigoOutputStream extends FileOutputStream{                                                  
+    public static String fileName = "C:/tmp/result.txt";                                                  
+    
+    private FileOutputStream original;
+    public AmigoOutputStream(FileOutputStream fileOutputStream) throws FileNotFoundException{
+        super(fileName);
+        original = fileOutputStream;
+    }                                            
+    public static void main(String[] args) throws FileNotFoundException {                                                  
+        new AmigoOutputStream(new FileOutputStream(fileName));                                                  
+    }
+
+    @Override
+    public void write(byte[] buffer, int byteOffset, int byteCount) throws IOException
+    {
+        original.write(buffer, byteOffset, byteCount);
+    }
+
+    @Override
+    public void flush() throws IOException
+    {
+        original.flush();
+    }
+
+    @Override
+    public void write(byte[] buffer) throws IOException
+    {
+        original.write(buffer);
+    }
+   
+
+    @Override
+    public void write(int oneByte) throws IOException
+    {
+        original.write(oneByte);
+    } 
+
+    
+    public void close() throws IOException{
+        original.flush();
+        original.write("JavaRush © All rights reserved.".getBytes());
+        original.close();
+    }                                                 
+
+}                       
