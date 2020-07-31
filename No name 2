@@ -1,0 +1,63 @@
+import java.io.*;
+import java.math.*;
+import java.util.*;                                                 
+
+////////////////////
+//   No name 2   //    
+///////////////////                                                                                                 
+/*
+ Считать с консоли URL-ссылку.
+ Вывести на экран через пробел список всех параметров (Параметры идут после ? и разделяются &, например, lvl=15).
+ URL содержит минимум 1 параметр.
+ Выводить параметры нужно в той же последовательности, в которой они представлены в URL.
+ Если присутствует параметр obj, то передать его значение в нужный метод alert.
+ alert(double value) - для чисел (дробные числа разделяются точкой)
+ alert(String value) - для строк
+ Обрати внимание на то, что метод alert необходимо вызывать ПОСЛЕ вывода списка всех параметров на экран.
+*/
+public class Solution {                                                  
+    public static void main(String[] args) throws IOException{                                                  
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String url = reader.readLine();
+        reader.close();
+        String test = "http://javarush.ru/alpha/index.html?obj=hahs&name=Amigo";
+        url = test;
+        String newStr = url.substring(url.indexOf("?")+1);
+        System.out.println(newStr);
+        
+        String[] array1 = newStr.split("&");
+        String alert = "";
+        url = "";
+        for (int i = 0;i<array1.length;i++){
+            String s = array1[i];
+            String b = "";
+            if (s.contains("obj")){
+                alert = array1[i].substring(4);
+            }
+            if (s.contains("=")){
+                b = s.substring(0,s.indexOf("="));
+                url += b + " ";
+            }
+            else
+                url += s + " ";
+        }
+        url.trim();
+        System.out.println(url);
+        if (!alert.equals("")){
+        try{
+            alert(Double.parseDouble(alert));
+        }
+        catch (NumberFormatException e){
+            alert(alert);
+        }
+        }
+    }                                                  
+
+    public static void alert(double value) {                                                  
+        System.out.println("double: " + value);                                                  
+    }                                                  
+
+    public static void alert(String value) {                                                  
+        System.out.println("String: " + value);                                                  
+    }                                                  
+}       
