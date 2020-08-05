@@ -1,0 +1,52 @@
+import java.io.*;
+import java.util.*;                                                  
+
+/*                                                   
+ Switch для нитей
+ 
+ Обработай список нитей в зависимости от состояния:
+ 1. Если нить еще не запущена, то запусти ее.
+ 2. Если нить в ожидании, то прерви ее.
+ 3. Если нить работает, то проверь маркер isInterrupted.
+ 4. Если нить прекратила работу, то выведи в консоль ее приоритет.
+ Используй switch.
+ *****************************
+ 
+ Switch for threads
+
+ Process the list of threads depending on the state:
+ 1. If the thread has not yet started, then start it.
+ 2. If the thread is pending, then interrupt it.
+ 3. If the thread works, then check the isInterrupted marker.
+ 4. If the thread has stopped working, then display its priority in the console.
+ Use switch.
+ */                                                  
+public class Solution {                                                  
+    public static void processThreads(Thread... threads) {                                                  
+        for (Thread thread : threads){
+            switch (thread.getState()){
+                case NEW:                                                  
+                    thread.start();                                                  
+                    break;                                                  
+                case WAITING:                                                  
+                    thread.interrupt();                                                  
+                    break;                                                  
+                case TIMED_WAITING:                                                  
+                    thread.interrupt();                                                  
+                    break;                                                  
+                case RUNNABLE:                                                  
+                    thread.isInterrupted();                                                  
+                    break;                                                  
+                case TERMINATED:                                                  
+                    System.out.println(thread.getPriority());                                                  
+                    break;                                                  
+                case BLOCKED:
+                    thread.interrupt();
+                    break;   
+            }
+        }                                           
+    }                                                  
+
+    public static void main(String[] args) {
+    }                                                  
+}    
