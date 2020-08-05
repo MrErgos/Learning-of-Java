@@ -1,0 +1,57 @@
+import java.io.*;
+import java.net.*;                                                  
+
+/*                                                   
+ Работать в поте лица!
+ 
+ Реализуй логику метода interrupt,
+   который должен прерывать трэд предварительно закрыв используемые ресурсы.
+ Используй метод super-класса в блоке finally.
+ *****************************
+ 
+ Work hard!
+
+ Implement the logic of the interrupt method, 
+   which should interrupt the thread by first closing the used resources.
+ Use the super class method in the finally block.
+ */                                                  
+public class Solution extends Thread {                                                  
+    private static final int BUFFER_SIZE = 2000;    //2000 bytes                                                  
+    private final Socket socket;                                                  
+    private final InputStream in;                                                  
+
+    public Solution(Socket socket) throws IOException {                                                  
+        this.socket = socket;                                                  
+        this.in = socket.getInputStream();                                                  
+    }                                                  
+
+    public void interrupt(){  
+        try{
+            socket.close();
+            in.close();
+        } catch (Throwable e){}
+        finally{
+        super.interrupt();}
+    }                                                  
+
+    public void run() {                                                  
+        try {                                                  
+            byte[] buf = new byte[BUFFER_SIZE];                                                  
+            while (true) {                                                  
+                int count = in.read(buf);                                                  
+                if (count < 0) {                                                  
+                    break;                                                  
+                } else {                                                  
+                    if (count > 0) {                                                  
+                        //process buffer here                                                  
+                    }                                                  
+                }                                                  
+            }                                                  
+        } catch (IOException ignored) {                                                  
+        }                                                  
+    }
+
+    public static void main(String[] args) { 
+        
+    }                                                  
+}                
