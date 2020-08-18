@@ -1,0 +1,75 @@
+//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+import java.util.*;                                                                                                                                                                                                        
+import java.io.*;
+/*                                                                                                                                                                                                                                                           
+ Собираем файл
+
+ Собираем файл из кусочков.
+ Считывать с консоли имена файлов.
+ Каждый файл имеет имя: [someName].partN.
+
+ Например, Lion.avi.part1, Lion.avi.part2, ..., Lion.avi.part37.
+
+ Имена файлов подаются в произвольном порядке. Ввод заканчивается словом "end".
+ В папке, где находятся все прочтенные файлы, создать файл без суффикса [.partN].
+
+ Например, Lion.avi.
+
+ В него переписать все байты из файлов-частей используя буфер.
+ Файлы переписывать в строгой последовательности, сначала первую часть, потом вторую, ..., в конце - последнюю.
+ Закрыть потоки.
+ 
+ ****************************************          
+ Putting the file together
+
+ Putting together a file from pieces.
+ Read filenames from the console.
+ Each file has a name: [someName] .partN.
+
+ For example, Lion.avi.part1, Lion.avi.part2, ..., Lion.avi.part37.
+
+ File names are given in random order.  The input ends with the word "end".
+ Create a file without the [.partN] suffix in the folder where all read files are located.
+
+ For example, Lion.avi.
+
+ To rewrite all bytes from files-parts into it using a buffer.
+ Rewrite files in strict sequence, first the first part, then the second, ..., at the end - the last.
+ Close streams.
+ 
+ */                                                                                                                                                                                                                                                          
+public class Solution {                                                  
+    public static void main(String[] args) throws IOException{  
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		Map<Integer,byte[]> map = new TreeMap<>();
+		String str = "";
+		String fileNameResult = "";
+		while (!(str = reader.readLine()).equals("end")){
+			String[] array = str.split("\\.");
+			int index = Integer.parseInt(array[2].substring(4));
+			System.out.println(index);
+			for (int i = 0;i<array.length-1;i++)
+			{
+			    fileNameResult += array[i] + "\\.";
+			}
+			try 
+			{
+			    FileInputStream fis = new FileInputStream(str);
+			    byte[] buffer = new byte[fis.available()];
+			    fis.read(buffer);
+			    map.put(index,buffer);
+			    fis.close();
+			}
+			catch (FileNotFoundException e){}
+		}
+		reader.close();
+		File file = new File(fileNameResult);
+		FileOutputStream fos = new FileOutputStream(file);
+		for (Map.Entry<Integer,byte[]> pair : map.entrySet())
+		{
+			fos.write(pair.getValue());
+			fos.flush();
+		}
+		fos.close();
+    }                                                  
+}    
