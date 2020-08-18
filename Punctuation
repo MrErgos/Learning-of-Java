@@ -1,0 +1,43 @@
+//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+import java.util.*;                                                                                                                                                                                                        
+import java.io.*;
+/*                                                                                                                                                                                                                                                           
+ Пунктуация
+
+ Считать с консоли 2 имени файла.
+ Первый Файл содержит текст.
+ Считать содержимое первого файла, удалить все знаки пунктуации, включая символы новой строки.
+
+ Результат вывести во второй файл.
+
+ Закрыть потоки.
+ 
+ ****************************************          
+ Punctuation
+
+  Read 2 filenames from the console.
+  The first File contains text.
+  Read the contents of the first file, remove all punctuation, including newlines.
+
+  Output the result to the second file.
+
+  Close streams.
+ 
+ */                                                                                                                                                                                                                                                          
+public class Solution {                                                  
+    public static void main(String[] args) throws IOException, FileNotFoundException
+	{  
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader fileIn = new BufferedReader(new FileReader(reader.readLine()));
+		BufferedWriter fileOut = new BufferedWriter(new FileWriter(reader.readLine()));
+		reader.close();
+		StringBuilder str = new StringBuilder();
+		while (fileIn.ready()){
+			str.append(fileIn.readLine().replaceAll("[\\p{Punct}\\n]",""));
+		}
+		fileOut.write(str.toString());
+		fileIn.close();
+		fileOut.close();
+	}
+	
+}
