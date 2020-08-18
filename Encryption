@@ -1,0 +1,76 @@
+//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+import java.util.*;                                                                                                                                                                                                        
+import java.io.*;
+/*                                                                                                                                                                                                                                                           
+ Шифровка
+
+ Придумать механизм шифровки/дешифровки.
+
+ Программа запускается с одним из следующих наборов параметров:
+ -e fileName fileOutputName
+ -d fileName fileOutputName
+
+ где:
+ fileName - имя файла, который необходимо зашифровать/расшифровать.
+ fileOutputName - имя файла, куда необходимо записать результат шифрования/дешифрования.
+ -e - ключ указывает, что необходимо зашифровать данные.
+ -d - ключ указывает, что необходимо расшифровать данные.
+
+ ****************************************          
+ Encryption
+
+ Come up with an encryption / decryption mechanism.
+
+ The program starts with one of the following parameter sets:
+ -e fileName fileOutputName
+ -d fileName fileOutputName
+
+ Where:
+ fileName is the name of the file to be encrypted / decrypted.
+ fileOutputName is the name of the file where the encryption / decryption result should be written.
+ -e - the key indicates that the data must be encrypted.
+ -d - the key indicates that it is necessary to decrypt the data.
+
+ */                                                                                                                                                                                                                                                          
+public class Solution {                                                  
+    public static void main(String[] args) throws IOException,FileNotFoundException
+	{  
+		Solution solution = new Solution();
+		if (args[0].equals("-e"))
+			solution.encryption(args[1],args[2]);
+		else if (args[0].equals("-d"))
+			solution.decryption(args[1],args[2]);
+	}
+
+	public void encryption(String fileName,String fileOutputName) throws IOException, FileNotFoundException
+	{
+		FileInputStream reader = new FileInputStream(fileName);
+		FileOutputStream writer = new FileOutputStream(fileOutputName);
+		byte[] bufferInput = new byte[reader.available()];
+		reader.read(bufferInput);
+		for (int i = 0;i<bufferInput.length;i++){
+			writer.write(bufferInput[i]);
+			writer.flush();
+			writer.write((int) 'G');
+			writer.flush();
+		}
+		reader.close();
+		writer.close();
+	}
+
+	public void decryption(String fileName,String fileOutputName) throws IOException, FileNotFoundException
+	{
+		FileInputStream reader = new FileInputStream(fileName);
+		FileOutputStream writer = new FileOutputStream(fileOutputName);
+		byte[] bufferInput = new byte[reader.available()];
+		reader.read(bufferInput);
+		for (int i = 0;i<bufferInput.length;){
+			writer.write(bufferInput[i]);
+			writer.flush();
+			i += 2;
+		}
+		reader.close();
+		writer.close();
+	}
+}    
+
