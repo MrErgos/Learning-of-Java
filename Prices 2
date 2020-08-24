@@ -1,0 +1,141 @@
+//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+import java.util.*;                                                                                                                                                                                                        
+import java.io.*;
+/*              
+ Прайсы 2
+
+ CrUD для таблицы внутри файла
+ Считать с консоли имя файла для операций CrUD
+
+ Программа запускается с одним из следующих наборов параметров:
+ -u id productName price quantity
+ -d id
+
+ Значения параметров:
+ где id - 8 символов
+ productName - название товара, 30 символов
+ price - цена, 8 символов
+ quantity - количество, 4 символа
+ -u - обновляет данные товара с заданным id
+ -d - производит физическое удаление товара с заданным id (все данные, которые относятся к переданному id)
+
+ В файле данные хранятся в следующей последовательности (без разделяющих пробелов):
+ id productName price quantity
+ Данные дополнены пробелами до их длины
+
+ Пример:
+ 19847   Шорты пляжные синие           159.00  12
+ 198479  Шорты пляжные черные с рисунко173.00  17
+ 19847983Куртка для сноубордистов, разм10173.991234
+ 
+ ****************************************          
+ Prices 2
+
+ CrUD for a table inside a file
+ Read file name for CrUD operations from console
+
+ The program starts with one of the following parameter sets:
+ -u id productName price quantity
+ -d id
+
+ Parameter values:
+ where id is 8 characters
+ productName - product name, 30 characters
+ price - price, 8 characters
+ quantity - quantity, 4 characters
+ -u - updates product data with the given id
+ -d - performs physical removal of the product with the given id (all data related to the passed id)
+
+ In the file, data is stored in the following sequence (without separating spaces):
+ id productName price quantity
+ Data is padded with spaces to its length
+
+ Example:
+ 19847 Beach shorts blue 159.00 12
+ 198479 Beach shorts, black with a pattern 173.00 17
+ 19847983 Snowboarder jacket, size 10173.991234
+ 
+ */                                                                                                                                                                                                                                                          
+public class Solution {     
+	BufferedReader file1;
+	BufferedWriter fileWriter;
+	String fileName;
+    public static void main(String[] args) throws IOException,FileNotFoundException
+	{  
+		if (!(args.length <= 0))
+		{
+		Solution solution = new Solution();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		solution.fileName = reader.readLine();
+		reader.close();
+		solution.file1 = new BufferedReader(new FileReader(solution.fileName));
+		switch (args[0])
+		{
+			case "-d":
+				solution.delete(args[1]);
+				break;
+			case "-u":
+				solution.update(args[1],args[2],args[3],args[4]);
+				break;
+			default :
+				break;
+		}
+		
+		solution.file1.close();
+		solution.fileWriter.close();
+		}
+	}
+	
+	public void update(String id, String productName, String price, String quantity) throws IOException
+	{
+		String spaceId = String.format("%-8d",Integer.parseInt(id));
+		String spaceProductName = String.format("%-30.30s",productName);
+		String spacePrice = String.format("%-8.2f",Float.parseFloat(price));
+		String spaceQuantity = String.format("%-4d",Integer.parseInt(quantity));
+		String lastProduct;
+		int idHelper;
+		List<String> list = new ArrayList<>();
+		while (file1.ready())
+		{
+			lastProduct = file1.readLine();
+			idHelper = Integer.parseInt(lastProduct.substring(0,8).trim());
+			if (idHelper != Integer.parseInt(id))
+			{
+				list.add(lastProduct);
+			}
+			else
+			{
+				list.add(spaceId + spaceProductName + spacePrice + spaceQuantity);
+			}
+		}
+		fileWriter = new BufferedWriter(new FileWriter(fileName));
+		for (String str : list)
+		{
+			fileWriter.write(str + "\n");
+		}
+	}
+	
+	public void delete(String stringId) throws IOException
+	{
+		int id = Integer.parseInt(stringId);
+		String lastProduct;
+		int idHelper;
+		List<String> list = new ArrayList<>();
+		while (file1.ready())
+		{
+			lastProduct = file1.readLine();
+			idHelper = Integer.parseInt(lastProduct.substring(0,8).trim());
+			if (idHelper != id)
+			{
+				list.add(lastProduct);
+			}
+		}
+		fileWriter = new BufferedWriter(new FileWriter(fileName));
+		for (String str : list)
+		{
+			fileWriter.write(str + "\n");
+		}
+	}
+}    
+
+
