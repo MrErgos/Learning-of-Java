@@ -1,0 +1,82 @@
+//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+import java.util.*;                                                                                                                                                                                                        
+import java.io.*;
+/*              
+ Самый богатый
+
+ В метод main первым параметром приходит имя файла.
+ В этом файле каждая строка имеет следующий вид:
+ имя значение
+ где [имя] - String, [значение] - double. [имя] и [значение] разделены пробелом.
+
+ Для каждого имени посчитать сумму всех его значений.
+ Вывести в консоль имена в алфавитном порядке, у которых максимальная сумма.
+ Имена разделять пробелом либо выводить с новой строки.
+ Закрыть потоки.
+
+ Пример входного файла:
+ Петров 0.501
+ Иванов 1.35
+ Петров 0.85
+
+ Пример вывода:
+ Петров
+ 
+ ****************************************          
+ The most rich
+
+  The main method receives the file name as the first parameter.
+  In this file, each line looks like this:
+  name value
+  where [name] is String, [value] is double.  [name] and [value] are separated by a space.
+
+  For each name, calculate the sum of all its values.
+  Display the names in alphabetical order with the maximum amount to the console.
+  Separate names with a space or print on a new line.
+  Close streams.
+
+  Sample input file:
+  Petrov 0.501
+  Ivanov 1.35
+  Petrov 0.85
+
+  Output example:
+  Petrov
+ 
+ */                                                                                                                                                                                                                                                          
+public class Solution {     
+	BufferedReader file1;
+    public static void main(String[] args) throws IOException,FileNotFoundException
+	{  
+		if (!(args.length <= 0))
+		{
+		Solution solution = new Solution();
+		solution.file1 = new BufferedReader(new FileReader(args[0]));
+		solution.findMaxValue();
+		solution.file1.close();
+		}
+	}
+	
+	public void findMaxValue() throws IOException
+	{
+		TreeMap<String, Double> map = new TreeMap<>();
+		while (file1.ready())
+		{
+			String[] array = file1.readLine().split(" ");
+			if (map.containsKey(array[0]))
+			{
+				Double value = map.get(array[0]);
+				map.replace(array[0],value+Double.parseDouble(array[1]));
+			}
+			else
+				map.put(array[0],Double.parseDouble(array[1]));
+		}
+		double max = Collections.max(map.values());
+		for (Map.Entry<String,Double> pair : map.entrySet())
+		{
+			if (pair.getValue() == max)
+				System.out.println(pair.getKey());
+		}
+	}
+}    
+
