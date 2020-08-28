@@ -1,0 +1,92 @@
+//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+import java.util.*;                                                                                                                                                                                                        
+import java.io.*;
+/*             
+ Замена чисел  
+
+ 1. В статическом блоке инициализировать словарь map парами [число-слово] от 0 до 12 включительно.
+ Например, 0 - "ноль", 1 - "один", 2 - "два"
+ 2. Считать с консоли имя файла, считать содержимое файла.
+ 3. Заменить все числа на слова используя словарь map.
+ 4. Результат вывести на экран.
+ 5. Закрыть потоки.
+
+ Пример данных в файле:
+ Это стоит 1 бакс, а вот это - 12 .
+ Переменная имеет имя file1.
+ 110 - это число.
+
+ Пример вывода в консоль:
+ Это стоит один бакс, а вот это - двенадцать .
+ Переменная имеет имя file1.
+ 110 - это число.
+ 
+ ****************************************          
+ Replacing numbers
+
+ 1. In the static block, initialize the map dictionary with [number-word] pairs from 0 to 12 inclusive.
+ For example, 0 - "zero", 1 - "one", 2 - "two"
+ 2. Read the file name from the console, read the contents of the file.
+ 3. Replace all numbers with words using the map dictionary.
+ 4. Display the result on the screen.
+ 5. Close streams.
+
+ Sample data in file:
+ It costs 1 buck, but this is 12.
+ The variable is named file1.
+ 110 is a number.
+
+ Example of console output:
+ It costs one buck, but this is twelve.
+ The variable is named file1.
+ 110 is a number.
+ 
+ */                                                                                                                                                                                                                                                          
+public class Solution {                                                  
+    public static Map<Integer, String> map = new HashMap<Integer, String>();                                                  
+	
+	static 
+	{
+		map.put(0,"ноль");
+		map.put(1,"один");
+		map.put(2,"два");
+		map.put(3,"три");
+		map.put(4,"четыре");
+		map.put(5,"пять");
+		map.put(6,"шесть");
+		map.put(7,"семь");
+		map.put(8,"восемь");
+		map.put(9,"девять");
+		map.put(10,"десять");
+		map.put(11,"одинадцать");
+		map.put(12,"двенадцать");
+	}
+	
+	
+    public static void main(String[] args) throws IOException{                                                  
+		BufferedReader readerOfLine = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader reader = new BufferedReader(new FileReader(args[0]));
+		readerOfLine.close();
+		while (reader.ready())
+		{
+			String[] array = reader.readLine().split(" ");
+			StringBuilder sb = new StringBuilder("");
+			for (int i = 0;i < array.length;i++)
+			{
+				try
+				{
+					int num = Integer.parseInt(array[i]);
+					if (map.containsKey(num))
+						sb.append(map.get(num) + " ");
+					else
+						throw new NumberFormatException();
+				}
+				catch (NumberFormatException e)
+				{
+					sb.append(array[i] + " ");
+				}
+			}
+			System.out.println(sb.toString().trim());
+		}
+    }                                                  
+}           
