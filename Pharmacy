@@ -1,0 +1,151 @@
+//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+import java.util.*;                                                                                                                                                                                                        
+import java.io.*;                                                                                                                                                                                                        
+import java.util.concurrent.atomic.*;
+import java.time.chrono.IsoChronology;                                                                                                                                                                                                        
+/*                                                                                                                                                                                                                                                           
+ Аптека                                                                                                                                                                                                      
+ Реализуй интерфейс Runnable в классах Apteka и Person.
+ Все нити должны работать пока не isStopped.
+ Логика для Apteka: drugsController должен сделать закупку (вызвать метод void buy(Drug drug, int count)) случайного лекарства (getRandomDrug) в количестве (getRandomCount) и подождать 300 мс.
+ Логика для Person: drugsController должен сделать продажу (вызвать метод void sell(Drug drug, int count)) случайного лекарства (getRandomDrug) в количестве (getRandomCount) и подождать 100 мс.
+ Расставь synchronized там, где это необходимо.
+ 
+ ****************************************                                                                                                                                                                                                        
+ Pharmacy
+ Implement the Runnable interface in the Apteka and Person classes.
+ All threads should run until isStopped.
+ The logic for Apteka: drugsController should make a purchase (call the void buy (Drug drug, int count) method) of a random drug (getRandomDrug) in the amount (getRandomCount) and wait 300 ms.
+ The logic for Person: drugsController should make a sale (call the void sell (Drug drug, int count) method) of a random drug (getRandomDrug) in the amount (getRandomCount) and wait 100ms.
+ Arrange synchronized where necessary.
+ 
+ */                                                                                                                                                                                                                                                          
+public class Solution {                                                  
+    public static DrugsController drugsController = new DrugsController();                                                  
+    public static boolean isStopped = false;                                                  
+
+    public static void main(String[] args) throws InterruptedException {                                                  
+        Thread apteka = new Thread(new Apteka(), "Apteka");                                                  
+        Thread man = new Thread(new Person(), "Мужчина");                                                  
+        Thread woman = new Thread(new Person(), "Женщина");                                                  
+
+        apteka.start();                                                  
+        man.start();                                                  
+        woman.start();                                                  
+
+        Thread.sleep(1000);                                                  
+        isStopped = true;                                                  
+    }                                                  
+
+    public static class Apteka implements Runnable
+	{
+
+		@Override
+		public void run()
+		{
+			while (!isStopped){
+			drugsController.buy(getRandomDrug(),getRandomCount());
+			waitAMoment();
+			waitAMoment();
+			waitAMoment();
+			}
+		}
+
+		
+    }                                                  
+
+    public static class Person implements Runnable
+	{
+
+		@Override
+		public void run()
+		{
+			while (!isStopped){
+			drugsController.sell(getRandomDrug(),getRandomCount());
+			waitAMoment();
+			}
+		}
+
+		
+    }                                                  
+
+    public static int getRandomCount() {                                                  
+        return (int) (Math.random() * 3) + 1;                                                  
+    }                                                  
+
+    public static Drug getRandomDrug() {                                                  
+        int index = (int) ((Math.random() * 1000) % (DrugsController.allDrugs.size()));                                                  
+        List<Drug> drugs = new ArrayList<>(DrugsController.allDrugs.keySet());                                                  
+        return drugs.get(index);                                                  
+    }                                                  
+
+    private static void waitAMoment() {                                                  
+        try {                                                  
+            Thread.sleep(100);                                                  
+        } catch (InterruptedException e) {                                                  
+        }                                                  
+    }                  
+	
+	public static class DrugsController {                                                  
+		public static Map<Drug, Integer> allDrugs = new HashMap<Drug, Integer>();   // <Лекарство, Количество>                                                  
+
+		static {                                                  
+			Drug panadol = new Solution().new Drug();                                                  
+			panadol.setName("Панадол");                                                  
+			allDrugs.put(panadol, 5);                                                  
+
+			Drug analgin = new Solution().new Drug();                                                  
+			analgin.setName("Анальгин");                                                  
+			allDrugs.put(analgin, 18);                                                  
+
+			Drug placebo = new Solution().new Drug();                                                  
+			placebo.setName("Плацебо");                                                  
+			allDrugs.put(placebo, 1);                                                  
+		}                                                  
+
+		public synchronized void buy(Drug drug, int count) {                                                  
+			String name = Thread.currentThread().getName();                                                  
+			if (!allDrugs.containsKey(drug)) {                                                  
+				System.out.println("Нет в наличии");                                                  
+			}                                                  
+			Integer currentCount = allDrugs.get(drug);                                                  
+			if (currentCount < count) {                                                  
+				System.out.println(String.format("%s хочет %s %d шт. В наличии - %d", name, drug.getName(), count, currentCount));                                                  
+			} else {                                                  
+				allDrugs.put(drug, (currentCount - count));                                                  
+				System.out.println(String.format("%s купил(а) %s %d шт. Осталось - %d", name, drug.getName(), count, (currentCount - count)));                                                  
+			}                                                  
+		}                                                  
+
+		public synchronized void sell(Drug drug, int count) {                                                  
+			System.out.println(Thread.currentThread().getName() + " Закупка " + drug.getName() + " " + count);                                                  
+			if (!allDrugs.containsKey(drug)) {                                                  
+				allDrugs.put(drug, 0);                                                  
+			}                                                  
+			Integer currentCount = allDrugs.get(drug);                                                  
+			allDrugs.put(drug, (currentCount + count));                                                  
+		}                                                  
+	}        
+	
+	public class Drug {                                                  
+		private String name;                                                  
+		private String description;                                                  
+
+		public String getName() {                                                  
+			return name;                                                  
+		}                                                  
+
+		public void setName(String name) {                                                  
+			this.name = name;                                                  
+		}                                                  
+
+		public String getDescription() {                                                  
+			return description;                                                  
+		}                                                  
+
+		public void setDescription(String description) {                                                  
+			this.description = description;                                                  
+		}                                                  
+	}             
+}                  
+                        
