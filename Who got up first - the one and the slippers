@@ -1,0 +1,80 @@
+//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+import java.util.*;                                                                                                                                                                                                        
+import java.io.*;                                                                                                                                                                                                        
+import java.util.concurrent.atomic.*;                                                                                                                                                                                                        
+/*                                                                                                                                                                                                                                                           
+ Кто первый встал - того и тапки                                                                                                                                                                                                        
+ 1. Разберись, что делает программа.                                                                                                                                                                                                        
+ 1.1. Каждая нить должна читать с консоли строки. Используй готовый static BufferedReader reader.                                                                                                                                                                                                        
+ 1.2. Используй AtomicInteger readStringCount, чтобы посчитать, сколько строк уже считано с консоли всеми нитями.                                                                                                                                                                                                        
+ 2. Реализуй логику метода run:                                                                                                                                                                                                        
+ 2.1. Пока нить не прервана (!isInterrupted) читай с консоли строки и добавляй их в поле List<String> result.                                                                                                                                                                                                        
+ 2.2. Используй readStringCount для подсчета уже считанных с консоли строк.                                                                                                                                                                                                        
+
+ ****************************************                                                                                                                                                                                                        
+ Who got up first - the one and the slippers                                                                                                                                                                                                        
+ 1. Understand what the program does.                                                                                                                                                                                                        
+ 1.1.  Each thread must read lines from the console.  Use a ready-made static BufferedReader reader.                                                                                                                                                                                                        
+ 1.2.  Use AtomicInteger readStringCount to count how many lines have already been read from the console by all threads.                                                                                                                                                                                                        
+ 2. Implement the logic of the run method:                                                                                                                                                                                                        
+ 2.1.  Until the thread is interrupted (! IsInterrupted), read the lines from the console and add them to the List <String> result field.                                                                                                                                                                                                        
+ 2.2.  Use readStringCount to count the lines already read from the console.                                                                                                                                                                                                        
+
+ */                                                                                                                                                                                                                                                          
+public class Solution {                                                                                                                                                                                                                                                          
+    public static volatile AtomicInteger readStringCount = new AtomicInteger(0);                                                                                                                                                                                                                                                          
+    public static volatile BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));                                                                                                                                                                                                                                                          
+
+    public static void main(String[] args) throws IOException {                                                                                                                                                                                                                                                          
+        //read count of strings                                                                                                                                                                                                                                                          
+        int count = Integer.parseInt(reader.readLine());                                                                                                                                                                                                                                                          
+
+        //init threads                                                                                                                                                                                                                                                          
+        ReaderThread consolReader1 = new ReaderThread();                                                                                                                                                                                                                                                          
+        ReaderThread consolReader2 = new ReaderThread();                                                                                                                                                                                                                                                          
+        ReaderThread consolReader3 = new ReaderThread();                                                                                                                                                                                                                                                          
+
+        consolReader1.start();                                                                                                                                                                                                                                                          
+        consolReader2.start();                                                                                                                                                                                                                                                          
+        consolReader3.start();                                                                                                                                                                                                                                                          
+
+        while (count > readStringCount.get()) {                                                                                                                                                                                                                                                          
+        }                                                                                                                                                                                                                                                          
+
+        consolReader1.interrupt();                                                                                                                                                                                                                                                          
+        consolReader2.interrupt();                                                                                                                                                                                                                                                          
+        consolReader3.interrupt();                                                                                                                                                                                                                                                          
+        System.out.println("#1:" + consolReader1);                                                                                                                                                                                                                                                          
+        System.out.println("#2:" + consolReader2);                                                                                                                                                                                                                                                          
+        System.out.println("#3:" + consolReader3);                                                                                                                                                                                                                                                          
+
+
+        reader.close();                                                                                                                                                                                                                                                          
+    }                                                                                                                                                                                                                                                          
+
+    public static class ReaderThread extends Thread {                                                                                                                                                                                                                                                          
+        private List<String> result = new ArrayList<String>();                                                                                                                                                                                                                                                          
+
+        public void run()                                                   
+		{                                                     
+			while (!Thread.currentThread().isInterrupted())                                                  
+			{                                                  
+				try                                                  
+				{                                                  
+					if (reader.ready()){                                                  
+						String str = reader.readLine();                                                                                                
+					    result.add(str);                                                  
+						readStringCount.incrementAndGet();                                                  
+					}                                                  
+				}                                                  
+				catch (IOException e){}                                                                                                   
+			}                                                                                                
+        }                                                                                                                                                                                                                                                                     
+
+        @Override                                                                                                                                                                                                                                                          
+        public String toString() {                                                                                                                                                                                                                                                          
+            return result.toString();                                                                                                                                                                                                                                                          
+        }                                                                                                                                                                                                                                                          
+    }                                                                                                                                                                                                                                                          
+} 
+
