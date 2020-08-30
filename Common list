@@ -1,0 +1,168 @@
+//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+import java.util.*;                                                                                                                                                                                                        
+import java.io.*;                                                                                                                                                                                                        
+import java.util.concurrent.atomic.*;
+import java.time.chrono.IsoChronology;                                                                                                                                                                                                        
+/*                                                                                                                                                                                                                                                           
+ Общий список                                                                                                                                                                                                       
+ 1. Изменить класс Solution так, чтобы он стал списком. (Необходимо реализовать интерфейс java.util.List).
+ 2. Список Solution должен работать только с целыми числами Long.
+ 3. Воспользуйтесь полем original.
+ 4. Список будет использоваться нитями, поэтому позаботьтесь, чтобы все методы были синхронизированы.                                                                                                                                                                                                    
+
+ ****************************************                                                                                                                                                                                                        
+ Common list
+  1. Change the Solution class to become a list.  (The java.util.List interface needs to be implemented).
+  2. The Solution list should only work with Long integers.
+  3. Use the original field.
+  4. The list will be used by threads, so make sure all methods are in sync.
+
+ */                                                                                                                                                                                                                                                          
+public class Solution implements List<Long>{                                                  
+    private ArrayList<Long> original = new ArrayList<Long>();                                                  
+
+    public static void main(String[] args) {                                                  
+
+    }
+
+	@Override
+	public synchronized boolean addAll(Collection p1)
+	{
+		return original.addAll(p1);
+	}
+
+	@Override
+	public synchronized boolean addAll(int p1, Collection p2)
+	{
+		return original.addAll(p1,p2);
+	}
+
+	@Override
+	public synchronized boolean add(Long p1)
+	{
+		return original.add(p1);
+	}
+
+	@Override
+	public synchronized void add(int p1, Long p2)
+	{
+		original.add(p1, p2);
+	}
+
+	@Override
+	public synchronized boolean removeAll(Collection p1)
+	{
+		return original.removeAll(p1);
+	}
+
+	@Override
+	public synchronized boolean retainAll(Collection p1)
+	{
+		return original.retainAll(p1);
+	}
+
+	@Override
+	public synchronized boolean remove(Object p1)
+	{
+		return original.remove(p1);
+	}
+
+	@Override
+	public synchronized Long remove(int p1)
+	{
+		return original.remove(p1);
+	}
+
+	@Override
+	public synchronized Long set(int p1, Long p2)
+	{
+		return original.set(p1, p2);
+	}
+
+	@Override
+	public synchronized boolean containsAll(Collection p1)
+	{
+		return original.containsAll(p1);
+	}
+
+	@Override
+	public synchronized boolean contains(Object p1)
+	{
+		return original.contains(p1);
+	}
+
+	@Override
+	public <T extends Object> T[] toArray(T[] p1)
+	{
+		return original.toArray(p1);
+	}
+
+
+	@Override
+	public synchronized Object[] toArray()
+	{
+		return original.toArray();
+	}
+
+	@Override
+	public synchronized ListIterator listIterator(int p1)
+	{
+		return original.listIterator(p1);
+	}
+
+	@Override
+	public synchronized ListIterator listIterator()
+	{
+		return original.listIterator();
+	}
+
+	@Override
+	public synchronized int lastIndexOf(Object p1)
+	{
+		return original.lastIndexOf(p1);
+	}
+
+	@Override
+	public synchronized List subList(int p1, int p2)
+	{
+		return original.subList(p1,p2);
+	}
+
+	@Override
+	public synchronized boolean isEmpty()
+	{
+		return original.isEmpty();
+	}
+
+	@Override
+	public synchronized int size()
+	{
+		return original.size();
+	}
+
+	@Override
+	public synchronized Iterator iterator()
+	{
+		return original.iterator();
+	}
+
+	@Override
+	public synchronized void clear()
+	{
+		original.clear();
+	}
+
+	@Override
+	public synchronized int indexOf(Object p1)
+	{
+		return original.indexOf(p1);
+	}
+
+	@Override
+	public synchronized Long get(int p1)
+	{
+		return original.get(p1);
+	}
+
+}
+
