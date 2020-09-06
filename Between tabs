@@ -1,0 +1,37 @@
+//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+import java.util.*;                                                                                                                                                                                                        
+import java.io.*;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+/*             
+ Между табуляциями
+ 
+ Метод getPartOfString должен возвращать подстроку между первой и второй табуляцией.
+ На некорректные данные бросить исключение TooShortStringException.
+ Класс TooShortStringException не менять.
+ 
+ ****************************************          
+ Between tabs
+ 
+  The getPartOfString method must return the substring between the first and second tabs.
+  Throw TooShortStringException on invalid data.
+  Don't change the TooShortStringException class.
+ 
+ */                                                                                                                                                                                                                                                          
+public class Solution {                                                                                                                                                      
+    public static String getPartOfString(String string) throws TooShortStringException{    
+		if (string == null)
+			throw new TooShortStringException();
+		String[] array = string.split("\\t");
+		if (array.length < 3)
+			throw new TooShortStringException();
+        return array[1];                                                                                                                                                      
+    }                                                                                                                                                          
+
+    public static class TooShortStringException extends Exception {                                                                                                                                                      
+    }                                                                                                                                                      
+
+    public static void main(String[] args) throws TooShortStringException {                                                                                                                                                      
+        System.out.println(getPartOfString("\tJavaRush - лучший сервис \tобучения Java\t."));                                                                                                                                                      
+    }                                                                                                                                                      
+}       
