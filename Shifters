@@ -1,0 +1,54 @@
+//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+import java.util.*;                                                                                                                                                                                                        
+import java.io.*;
+/*             
+ Перевертыши
+
+ 1. Считать с консоли имя файла. Считать содержимое файла.
+ 2. Для каждой строки в файле:
+ 2.1. переставить все символы в обратном порядке.
+ 2.2. вывести на экран.
+ 3. Закрыть потоки.
+
+ Пример тела входного файла:
+ я - программист.
+ Амиго
+
+ Пример результата:
+ .тсиммаргорп - я
+ огимА
+ 
+ ****************************************          
+ Shifters
+
+ 1. Read the file name from the console.  Read the contents of the file.
+ 2. For each line in the file:
+ 2.1.  rearrange all characters in reverse order.
+ 2.2.  display.
+ 3. Close streams.
+
+ An example of the body of an input file:
+ I am a computer programmer.
+ Amigo
+
+ Result example:
+ .tsimmargorp - i
+ ogima
+
+ */                                                                                                                                                                                                                                                   
+public class Solution {                                                  
+    
+    public static void main(String[] args) throws IOException{                                                  
+		BufferedReader readerOfLine = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader reader = new BufferedReader(new FileReader(readerOfLine.readLine()));
+		readerOfLine.close();
+		while (reader.ready())
+		{
+			StringBuilder str = new StringBuilder(reader.readLine());
+			str.reverse();
+			
+			System.out.println(str.toString());
+		}
+		reader.close();
+    }                                                  
+}           
