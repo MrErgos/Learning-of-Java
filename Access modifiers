@@ -35,5 +35,5 @@ public class Solution {
             System.out.println("C class, method2");                                                                                                     
             super.method1();                                                                                                                                                     
         }                                                                                                                                                      
-    }                                                                                                                                                      
+    }                                                                                                                                                    
 }             
