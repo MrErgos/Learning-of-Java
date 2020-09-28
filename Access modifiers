@@ -1,5 +1,5 @@
 public class Solution {                                                                                                                                                   
-    public static void main(String[] s) {                                                                                                                                                    
+    public static void main(String[] s) {                                                                                                                                                   
         A a = new C();                                                                                                                                                     
         a.method2();                                                                                                                                                    
     }                                                                                                                                                      
